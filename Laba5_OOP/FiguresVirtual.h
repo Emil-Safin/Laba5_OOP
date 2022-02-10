@@ -25,7 +25,7 @@ public:
 	virtual std::string classname() {
 		return "Figure";
 	}
-	bool isA(std::string classname) {
+	virtual bool isA(std::string classname) {
 		return (classname == this->classname()) ? true : false;
 	}
 };

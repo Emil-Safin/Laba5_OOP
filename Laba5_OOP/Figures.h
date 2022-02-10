@@ -6,36 +6,33 @@ public:
 	Figure() {
 		std::cout << "Figure constructor\n";
 	}
-	Figure(std::string classname) {
-		std::cout << "Figure(string) constructor\n";
-	}
 	Figure(Figure* a) {
-		std::cout << "Figure(copy*) constructor\n";
+		std::cout << "Figure(copy) constructor\n";
 	}
 	Figure(Figure& a) {
-		std::cout << "Figure(copy&) constructor\n";
+		std::cout << "Figure(copy) constructor\n";
 	}
-	~Figure() {
+	virtual ~Figure() {
 		std::cout << "Figure destructor\n";
 	}
-	void endDraw() {
+	virtual void endDraw() {
 		std::cout << " has been drawn\n";
 	}
-	void draw() {
+	virtual void draw() {
 		std::cout << "Figure";
 		endDraw();
 	}
 	virtual std::string classname() {
 		return "Figure";
 	}
-	bool isA(std::string classname) {
-		return (classname == this->classname()) ? true : false;
+	virtual bool isA(std::string classname) {
+		return (classname == "Figure") ? true : false;
 	}
 };
 class Line : public Figure {
-private:
-	int len;
+	//protected:
 public:
+	int len;
 	Line() :len(0) {
 		std::cout << "Line constructor\n";
 	}
@@ -48,13 +45,13 @@ public:
 	Line(Line& a) :len(a.getLength()) {
 		std::cout << "Line(copy) constructor\n";
 	}
-	~Line() {
+	virtual ~Line() override {
 		std::cout << "Line destructor\n";
 	}
-	void endDraw() {
+	virtual void endDraw() override {
 		std::cout << " ------ has been drawn\n";
 	}
-	void draw() {
+	virtual void draw() override {
 		std::cout << "Line";
 		endDraw();
 	}
@@ -64,7 +61,48 @@ public:
 	int getLength() {
 		return len;
 	}
-	virtual std::string classname()override {
+	virtual std::string classname() override {
 		return "Line";
+	}
+	virtual bool isA(std::string classname) override {
+		return (classname == "Line") || Figure::isA(classname);
+	}
+};
+class Sector : public Line {
+public:
+	Sector() {
+		std::cout << "Line constructor\n";
+	}
+	Sector(int len) :Line(len) {
+		std::cout << "Line constructor\n";
+	}
+	Sector(Sector* a) {
+		len = a->getLength();
+		std::cout << "Line(copy) constructor\n";
+	}
+	Sector(Sector& a) {
+		std::cout << "Line(copy) constructor\n";
+	}
+	virtual ~Sector() override {
+		std::cout << "Line destructor\n";
+	}
+	virtual void endDraw() override {
+		std::cout << " ------ has been drawn\n";
+	}
+	virtual void draw() override {
+		std::cout << "Line";
+		endDraw();
+	}
+	void length() {
+		std::cout << "Length: " << len << "\n";
+	}
+	int getLength() {
+		return len;
+	}
+	virtual std::string classname() override {
+		return "Sector";
+	}
+	virtual bool isA(std::string classname) override {
+		return (classname == "Sector") || Line::isA(classname);
 	}
 };

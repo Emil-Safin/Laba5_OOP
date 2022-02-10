@@ -13,7 +13,6 @@ Figure* ReturnFigure2() {
 }
 Figure& ReturnFigure3() {
 	Figure temp;
-//	Figure& a = temp;
 	return temp;
 }
 std::unique_ptr<Figure> ReturnFigureUnique(std::unique_ptr<Figure> a) {
@@ -28,7 +27,7 @@ void func1(Figure obj) {
 	std::cout << "obj: " << obj.classname() << "\n";
 	obj.draw();
 	if (obj.isA("Line")) {
-		dynamic_cast<Line*>(&obj)->length();
+		static_cast<Line*>(&obj)->length();
 	}
 };
 void func2(Figure* obj) {
@@ -36,7 +35,7 @@ void func2(Figure* obj) {
 	std::cout << "obj: " << obj->classname() << "\n";
 	obj->draw();
 	if (obj->isA("Line")) {
-		dynamic_cast<Line*>(obj)->length();
+		static_cast<Line*>(obj)->length();
 	}
 };
 void func3(Figure& obj) {
@@ -44,19 +43,19 @@ void func3(Figure& obj) {
 	std::cout << "obj: " << obj.classname() << "\n";
 	obj.draw();
 	if (obj.isA("Line")) {
-		dynamic_cast<Line*>(&obj)->length();
+		static_cast<Line*>(&obj)->length();
 	}
 };
 
 
 int main() {
-	/*Figure* a = new Figure();
+	/**/Figure* a = new Figure();
 	Figure* b = new Line(10);
-	Line* c = new Line(20);*/
-	/*
+	Line* c = new Line(20);
+	
     
 	std::cout << "\n";
-	func1(a);
+	func1(*a);
 	std::cout << "\n";
 	func2(a);
 	std::cout << "\n";
@@ -93,6 +92,7 @@ int main() {
 	dynamic_cast<Line*>(b)->length();
 	dynamic_cast<Line*>(b)->classname();
 	std::cout << "\n";
+	*/
 	Line* d = dynamic_cast<Line*>(b);
 	d->draw();
 	d->length();
@@ -123,13 +123,13 @@ int main() {
 	d = nullptr;
 	std::cout << "\n\n\n";
 	
-	*//*
+	/*
     Figure a = (Figure&)ReturnFigure1();
     std::cout << "\n\n";
     Figure* b = ReturnFigure2();
     std::cout << "\n\n";
     Figure& c = ReturnFigure3();
-    std::cout << "\n\n";
+    std::cout << "\n\n";*/
 
 	//delete(b);
 
